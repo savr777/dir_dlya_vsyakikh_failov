@@ -6,7 +6,7 @@ rm -rf ${curdir}/work
 
 # Create output directory
 
-mkdir -p ${curdir}/work
+vlib -p ${curdir}/work
 
 vlog \
     ${curdir}/pow5_pipelined_valid.sv \
