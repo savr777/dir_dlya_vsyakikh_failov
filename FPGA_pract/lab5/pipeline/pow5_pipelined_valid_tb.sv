@@ -26,14 +26,21 @@ module pow5_pipelined_valid_tb;
     end
 
     initial begin
-        data_valid_i <= 1;
+        rst <= 1;
+        #10;
         rst <= 0;
+    end
+
+    initial begin
+        wait(~rst);
+        @(posedge clk);
+        data_valid_i <= 1;
         repeat(10) begin
             @(posedge clk);
             pow_data_i <= $urandom_range(0, 100);
             $display("time: %t; Input_value: %h Expected: %h", $time(), pow_data_i, pow_data_i**5);
         end
-        // ÑÐ±Ñ€Ð°ÑÑ‹Ð²Ð°ÐµÐ¼ data_valid_i
+        // ñáðàñûâàåì data_valid_i
         @(posedge clk);
         data_valid_i <= 0;
         repeat(10) begin
@@ -41,7 +48,15 @@ module pow5_pipelined_valid_tb;
             pow_data_i <= $urandom_range(0, 100);
             $display("time: %t; Input_value: %h Expected: %h", $time(), pow_data_i, pow_data_i**5);
         end
-        // ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ data_valid_i
+        // óñòàíàâëèâàåì data_valid_i
+        @(posedge clk);
+        data_valid_i <= 1;
+        @(posedge clk);
+        data_valid_i <= 0;
+        @(posedge clk);
+        data_valid_i <= 1;
+        @(posedge clk);
+        data_valid_i <= 0;
         @(posedge clk);
         data_valid_i <= 1;
         repeat(10) begin
@@ -52,6 +67,13 @@ module pow5_pipelined_valid_tb;
         // reset
         @(posedge clk);
         rst <= 1;
+        repeat(10) begin
+            @(posedge clk);
+            pow_data_i <= $urandom_range(0, 100);
+            $display("time: %t; Input_value: %h Expected: %h", $time(), pow_data_i, pow_data_i**5);
+        end
+        @(posedge clk);
+        rst <= 0;
         repeat(10) begin
             @(posedge clk);
             pow_data_i <= $urandom_range(0, 100);

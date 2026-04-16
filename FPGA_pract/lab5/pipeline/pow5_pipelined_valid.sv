@@ -69,19 +69,19 @@ module pow5_pipelined_valid
     //           2) use clock gating to reduce pipeline power consumption
 
   always_ff @ (posedge clk_i)
-    if (input_valid_ff)
+    if (data_valid_i)
       pow_input_ff <= pow_data_i;
 
   always_ff @ (posedge clk_i)
-    if (data_valid_stage_1_ff)
+    if (input_valid_ff)
       pow_input_stage_1_ff <= pow_input_ff;
 
   always_ff @ (posedge clk_i)
-    if (data_valid_stage_2_ff)
+    if (data_valid_stage_1_ff)
       pow_input_stage_2_ff <= pow_input_stage_1_ff;
 
   always_ff @ (posedge clk_i)
-    if (data_valid_stage_3_ff)
+    if (data_valid_stage_2_ff)
       pow_input_stage_3_ff <= pow_input_stage_2_ff;
 
 
@@ -96,19 +96,19 @@ module pow5_pipelined_valid
     //           2) use clock gating to reduce pipeline power consumption
 
   always_ff @ (posedge clk_i)
-    if (data_valid_stage_1_ff)
+    if (input_valid_ff)
       pow_data_stage_1_ff <= pow_mul_stage_1;
 
   always_ff @ (posedge clk_i)
-    if (data_valid_stage_2_ff)
+    if (data_valid_stage_1_ff)
       pow_data_stage_2_ff <= pow_mul_stage_2;
 
   always_ff @ (posedge clk_i)
-    if (data_valid_stage_3_ff)
+    if (data_valid_stage_2_ff)
       pow_data_stage_3_ff <= pow_mul_stage_3;
 
   always_ff @ (posedge clk_i)
-    if (output_valid_ff)
+    if (data_valid_stage_3_ff)
       pow_output_ff <= pow_mul_stage_4;
 
 

@@ -17,8 +17,8 @@ module syst_ws_tb;
       .x2_i(x2_i),
       .x3_i(x3_i),
       .y1_o(y1_o),
-      .y2_o(y2_o),
-    )
+      .y2_o(y2_o)
+    );
 
     initial begin
         clk <= 0;
